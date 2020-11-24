@@ -10,7 +10,14 @@
 <body>
     <h1>chat-app</h1>
     <div id="app">
-        {{ message }}
+        <ul>
+            <chat-message 
+                v-for="item in messageList" 
+                v-bind:message="item" 
+                v-bind:key="item.id"
+            ></chat-message>
+        </ul>
+        <div></div>
         <button v-on:click="sendMessage">Send</button>
     </div>
 </body>

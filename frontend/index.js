@@ -2,18 +2,30 @@
 const ws = new WebSocket('ws://localhost:3000');
 
 ws.onopen = () => {
-    app.connected = true;
+    vm.connected = true;
 }
 
 ws.onmessage = event => {
-    app.message = event.data;
+    const text = event.data;
+    const newMessage = {
+        id: vm.messageList.length,
+        text: text
+    } 
+    vm.messageList.push(newMessage);
 }
 
-const app = new Vue({
+Vue.component('chat-message', {
+    props: ['message'],
+    template: '<li>{{ message.text }}</li>'
+})
+
+const vm = new Vue({
     el: '#app',
     data: {
-        message: 'Hello Vue!',
-        connected: false
+        messageList: [
+            { id: 0, text: 'Hey' },
+            { id: 1, text: 'How' },
+        ]
     },
     methods: {
         sendMessage: function() {
