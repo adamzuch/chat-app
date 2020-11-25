@@ -10,7 +10,7 @@ wss.on('connection', ws => {
 
         console.log(data);
 
-        ws.send('Server says hi');
+        ws.send(`You said: ${data}`);
     });
 
 });
