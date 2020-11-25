@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="socket.js" defer></script>
     <script src="app.js" defer></script>
     <title>chat-app</title>
@@ -12,7 +13,10 @@
     <h1>chat-app</h1>
     <div id="socket"></div> <!-- Include for debugging purposes when using Vue Devtools-->
     <div id="app">
-        <connection-status :connected="connected"></connection-status>
+        <connection-status 
+            :connected="connected"
+            :user-id="userId"
+        ></connection-status>
         <chat-window></chat-window>
         <chat-input :connected="connected"></chat-input>
     </div>

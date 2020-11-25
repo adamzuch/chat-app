@@ -66,8 +66,15 @@ Vue.component('chat-input', {
  * Displays the status of the WebSocket connection.
  */
 Vue.component('connection-status', { 
-    props: { connected: Boolean },
-    template: `<div>{{ connected ? 'CONNECTED' : 'NOT CONNECTED' }}</div>`
+    props: { 
+        connected: Boolean,
+        userId: String 
+    },
+    template: 
+        `<div>
+            {{ connected ? 'CONNECTED' : 'NOT CONNECTED' }}
+            <div v-if="userId.length > 0">id: {{ userId }}</div> 
+        </div>`
 })
 
 /**
@@ -77,11 +84,20 @@ const vm = new Vue({
     name: 'app',
     el: '#app',
     data: {
-        connected: false
+        connected: false,
+        userId: ''
     },
-    created: function() {
+    created: async function() {
         // socket connection event listeners
         socket.$on('socket-connect', () => this.connected = true);
         socket.$on('socket-disconnect', () => this.connected = false);
+
+        // get user id
+        try {
+            response = await axios.get('http://localhost:3000/api/idgen');
+            this.userId = response.data.id; 
+        } catch (error) {
+            console.log(error);
+        }
     }
 });
