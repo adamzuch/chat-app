@@ -19,14 +19,24 @@ app.get('/api/id', (req, res) => {
 
 server.listen(PORT, () => console.log(`chat-app server listening on port ${PORT}`));
 
+// WebSocket event handling
+let clients = {}
+
 wss.on('connection', ws => {
     console.log(`New connection`);
-    
+
     ws.on('message', data => {
+        const parsed = JSON.parse(data);
 
-        console.log(data);
-
-        ws.send(`You said: ${data}`);
+        // client registered
+        if (parsed.type == 100) clients[parsed.userId] = ws;
+        
+        // client sent a text message. For now, broadcast message to all other clients.
+        if (parsed.type == 200) {
+            for (const [id, socket] of Object.entries(clients)) {
+                if (id != parsed.userId) socket.send(data);
+            }
+        }
     });
 
 });

@@ -2,8 +2,12 @@
  * Displays a single message.
  */
 Vue.component('chat-message', {
-    props: { message: Object },
-    template: '<div>{{ message.text }}</div>'
+    props: { 
+        userId: String,
+        message: Object 
+    },
+    template: 
+        `<div>{{ userId == message.userId ? 'YOU' : message.userId }}: {{ message.text }} @ {{ message.time }}</div>`
 });
 
 /**
@@ -21,15 +25,19 @@ Vue.component('chat-window', {
         }
     },
     methods: {
-        incomingMessage: function(message) {
-            const m = {
-                id: this.messageList.length,
-                text: message.data
-            }
-            this.messageList.push(m);
+        incomingMessage: function(inc) {
+            this.messageList.push(JSON.parse(inc.data));
         },
         outgoingMessage: function() {
-            if (this.$props.connected) socket.ws.send(this.inputText);
+            const out = {
+                userId: this.$props.userId,
+                type: 200,
+                time: new Date().toISOString(),
+                text: this.inputText
+            }
+            this.messageList.push(out);
+            if (this.$props.connected) socket.send(out);
+            this.inputText = ''; // reset form
         }
     },
     created: function() {
@@ -39,14 +47,16 @@ Vue.component('chat-window', {
     template: 
         `<div>
             <p><div>                               
-                <chat-message                   
+                <chat-message 
+                    :userId="userId"                  
                     v-for="item in messageList" 
                     :message="item"             
                     :key="item.id"              
                 ></chat-message>               
             </div>
             <p><div>
-                <input v-model="inputText"><button @click="outgoingMessage">Send</button>
+                <input v-model="inputText" @keyup.enter="outgoingMessage">
+                <button @click="outgoingMessage">SEND</button>
             </div>
         </div>`
 });
@@ -86,7 +96,13 @@ const vm = new Vue({
             const response = await fetch(`${BASE_URL}/api/id`);
             this.userId = (await response.json()).id;
         } catch (error) {
+            this.userId = 'ERROR'
             console.log(error);
         }
+        // register connection with socket
+        socket.send({
+            userId: this.userId,
+            type: 100
+        });
     }
 });

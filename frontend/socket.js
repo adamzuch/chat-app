@@ -10,6 +10,11 @@ const socket = new Vue({
     data: {
         ws: ws
     },
+    methods: {
+        send: function(data) {
+            this.ws.send(JSON.stringify(data));
+        }
+    },
     created: function() {
         // Initialise WebSocket event listeners which emit events to Vue components 
         this.ws.onopen = () => this.$emit('socket-connect');
