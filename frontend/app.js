@@ -3,62 +3,51 @@
  */
 Vue.component('chat-message', {
     props: { message: Object },
-    template: '<li>{{ message.text }}</li>'
+    template: '<div>{{ message.text }}</div>'
 });
 
 /**
- * Displays the list of messages between client and server.
+ * Displays the list of messages and handles incoming and outgoing messages.
  */
 Vue.component('chat-window', {
-    props: [],
+    props: {
+        connected: Boolean,
+        userId: String
+    },
     data: function() {
         return {
-            messageList: []
+            messageList: [],
+            inputText: ''
         }
     },
     methods: {
-        handleMessage: function(message) {
+        incomingMessage: function(message) {
             const m = {
                 id: this.messageList.length,
                 text: message.data
             }
             this.messageList.push(m);
         },
+        outgoingMessage: function() {
+            if (this.$props.connected) socket.ws.send(this.inputText);
+        }
     },
     created: function() {
         // new message event listener
-        socket.$on('new-message', this.handleMessage);
+        socket.$on('new-message', this.incomingMessage);
     },
     template: 
         `<div>
-            <ul>                               
+            <p><div>                               
                 <chat-message                   
                     v-for="item in messageList" 
                     :message="item"             
                     :key="item.id"              
                 ></chat-message>               
-            </ul>
-        </div>`
-});
-
-/**
- * Responsible for handling user input.
- */
-Vue.component('chat-input', {
-    props: { connected: Boolean },
-    data: function() {
-        return {
-            inputText: ''
-        }
-    },
-    methods: {
-        sendMessage: function() {
-            if (this.$props.connected) socket.ws.send(this.inputText);
-        }
-    },
-    template: 
-        `<div>
-            <input v-model="inputText"><button @click="sendMessage">Send</button>
+            </div>
+            <p><div>
+                <input v-model="inputText"><button @click="outgoingMessage">Send</button>
+            </div>
         </div>`
 });
 
@@ -75,7 +64,7 @@ Vue.component('connection-status', {
             status: {{ connected ? 'CONNECTED' : 'NOT CONNECTED' }}
             <div>id: {{ userId.length > 0 ? userId : 'None' }}</div> 
         </div>`
-})
+});
 
 /**
  * The root Vue instance.
