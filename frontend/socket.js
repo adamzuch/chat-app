@@ -1,4 +1,8 @@
-let ws = new WebSocket('ws://localhost:3000');
+const LOCAL_HOST = 'localhost:3000';
+const BASE_URL = `http://${LOCAL_HOST}`;
+const SOCKET_URL = `ws://${LOCAL_HOST}`;
+
+let ws = new WebSocket(SOCKET_URL);
 
 const socket = new Vue({
     name: 'socket',

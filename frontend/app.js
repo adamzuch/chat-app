@@ -72,8 +72,8 @@ Vue.component('connection-status', {
     },
     template: 
         `<div>
-            {{ connected ? 'CONNECTED' : 'NOT CONNECTED' }}
-            <div v-if="userId.length > 0">id: {{ userId }}</div> 
+            status: {{ connected ? 'CONNECTED' : 'NOT CONNECTED' }}
+            <div>id: {{ userId.length > 0 ? userId : 'None' }}</div> 
         </div>`
 })
 
@@ -94,8 +94,8 @@ const vm = new Vue({
 
         // get user id
         try {
-            response = await axios.get('http://localhost:3000/api/idgen');
-            this.userId = response.data.id; 
+            const response = await fetch(`${BASE_URL}/api/id`);
+            this.userId = (await response.json()).id;
         } catch (error) {
             console.log(error);
         }
