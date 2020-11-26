@@ -7,13 +7,16 @@ Vue.component('chat-message', {
         message: Object 
     },
     template: 
-        `<div>{{ userId == message.userId ? 'YOU' : message.userId }}: {{ message.text }} @ {{ message.time }}</div>`
+        `<div class="chat-message">
+            <{{ userId == message.userId ? 'YOU' : message.userId }} @{{ message.time }}> 
+            <b>{{ message.text }}</b> 
+        </div>`
 });
 
 /**
  * Displays the list of messages and handles incoming and outgoing messages.
  */
-Vue.component('chat-window', {
+Vue.component('chat', {
     props: {
         connected: Boolean,
         userId: String
@@ -27,6 +30,7 @@ Vue.component('chat-window', {
     methods: {
         incomingMessage: function(inc) {
             this.messageList.push(JSON.parse(inc.data));
+            this.$nextTick(() => this.scrollToEnd());
         },
         outgoingMessage: function() {
             const out = {
@@ -37,7 +41,13 @@ Vue.component('chat-window', {
             }
             this.messageList.push(out);
             if (this.$props.connected) socket.send(out);
+
             this.inputText = ''; // reset form
+            this.$nextTick(() => this.scrollToEnd());
+        },
+        scrollToEnd: function() {
+            const chatWindow = this.$refs.chatWindow;
+            chatWindow.scrollTop = chatWindow.scrollHeight;
         }
     },
     created: function() {
@@ -46,7 +56,7 @@ Vue.component('chat-window', {
     },
     template: 
         `<div>
-            <p><div>                               
+            <p><div class="chat-window" ref="chatWindow">                               
                 <chat-message 
                     :userId="userId"                  
                     v-for="item in messageList" 
@@ -54,9 +64,9 @@ Vue.component('chat-window', {
                     :key="item.id"              
                 ></chat-message>               
             </div>
-            <p><div>
+            <p><div class="chat-input">
                 <input v-model="inputText" @keyup.enter="outgoingMessage">
-                <button @click="outgoingMessage">SEND</button>
+                <button :disabled="!(inputText.length) > 0" @click="outgoingMessage">SEND</button>
             </div>
         </div>`
 });

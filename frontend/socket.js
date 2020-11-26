@@ -6,7 +6,6 @@ let ws = new WebSocket(SOCKET_URL);
 
 const socket = new Vue({
     name: 'socket',
-    el: '#socket',
     data: {
         ws: ws
     },
