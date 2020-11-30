@@ -64,9 +64,11 @@ Vue.component('chat-message', {
         message: Object 
     },
     template: 
-        `<div class="chat-message">
-            <{{ userId == message.userId ? 'YOU' : message.userId }} @{{ message.time }}> 
-            <b>{{ message.text }}</b> 
+        `<div :class="'chat-message ' + (userId == message.userId ? 'outgoing' : 'incoming')">
+            {{ message.text }}
+            <div class="message-footer">
+                {{ userId == message.userId ? 'You' : message.userId }} @ {{ message.time }}
+            </div> 
         </div>`
 });
 
@@ -99,8 +101,8 @@ Vue.component('chat-input', {
     },
     template: 
         `<div class="chat-input">
-            <input v-model="inputText" @keyup.enter="outgoingMessage">
-            <button :disabled="!(inputText.length) > 0" @click="outgoingMessage">SEND</button>
+            <input id="chat-input-text" placeholder="Write your message..." v-model="inputText" @keyup.enter="outgoingMessage">
+            <button id="chat-input-button" :disabled="!(inputText.length) > 0" @click="outgoingMessage"><b>SEND</b></button>
         </div>`
 });
 
