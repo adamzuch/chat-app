@@ -13,6 +13,10 @@ body {
     width: 100%;
 }
 
+#app {
+    height: 100%;
+}
+
 .wrapper {
     border: 10px solid red;
 
@@ -25,9 +29,7 @@ body {
 .header {
     border: 5px solid gold;
     display: flex;
-    flex: 1 1 5%;
-    min-height: 8em;
-    max-height: 8em;
+    flex: 1 1 auto;
     flex-direction: column;
 }
 
@@ -45,31 +47,35 @@ body {
     border: 5px solid black;
 }
 
-.chat {
-    border: 5px solid purple;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
 .chat-window {
-    flex: 1 1 100%;
     /* scrollbar-width: none; */
-    overflow: scroll;
+
     border: 5px solid green;
 
     display: flex;
+    flex: 1 1 85%;
     flex-direction: column;
-    justify-content: flex-end;
+    overflow: auto;
+}
+
+.chat-window > :first-child {
+    margin-top: auto;
 }
 
 .chat-input {
     border: 5px solid blue;
-    flex: auto;
+
+    display: flex;
+    flex: 1 1 auto;
 }
 
-.chat-message, input, button {
+.chat-message {
+    border: 5px solid gray;
+    height: 2em;
+    width: 100%;
+}
+
+input, button {
     padding: 5px;
 }
 

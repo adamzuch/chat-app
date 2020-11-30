@@ -104,7 +104,6 @@ Vue.component('chat-input', {
         </div>`
 });
 
-
 /**
  * The root Vue instance.
  */
