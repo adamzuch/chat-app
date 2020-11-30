@@ -1,25 +1,72 @@
 * {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-#app {
-    padding: 10px;
+body {
+    position: absolute;
+    height: 100%;
+    min-height: 100%;
+    width: 100%;
+}
+
+.wrapper {
+    border: 10px solid red;
+
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100%;
 }
 
 .header {
-    background-color: #42b883;
-    color: white;
+    border: 5px solid gold;
+    display: flex;
+    flex: 1 1 5%;
+    min-height: 8em;
+    max-height: 8em;
+    flex-direction: column;
+}
+
+.title {
+    border: 5px solid orange;
+    /* color: white; */
     padding: 10px;
     display: block;
+    text-align: center;
     font-size: 2em;
     font-weight: bold;
 }
 
+.connection-status {
+    border: 5px solid black;
+}
+
+.chat {
+    border: 5px solid purple;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
 .chat-window {
-    height: 75vh;
-    scrollbar-width: none;
-    overflow-y: auto;
-    background-color: rgb(245, 245, 245);
+    flex: 1 1 100%;
+    /* scrollbar-width: none; */
+    overflow: scroll;
+    border: 5px solid green;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.chat-input {
+    border: 5px solid blue;
+    flex: auto;
 }
 
 .chat-message, input, button {

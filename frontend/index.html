@@ -10,18 +10,24 @@
     <title>chat-app</title>
 </head>
 <body>
-    <div class="header">chat-app</div>
-    <!-- Include for debugging purposes when using Vue Devtools -->
-    <!-- <div id="socket"></div> -->
-    <div id="app">
-        <connection-status 
-            :connected="connected"
-            :user-id="userId"
-        ></connection-status>
-        <chat
-            :connected="connected"
-            :user-id="userId"
-        ></chat>
+    <div class="wrapper">
+        <!-- Include for debugging purposes when using Vue Devtools -->
+        <!-- <div id="socket"></div> -->
+        <div id="app">
+            <div class="header"><div class="title">chat-app</div>
+                <connection-status 
+                    :connected="connected"
+                    :user-id="userId"
+                ></connection-status>
+            </div>
+            <chat-window
+                :user-id="userId"
+            ></chat-window>
+            <chat-input
+                :connected="connected"
+                :user-id="userId"
+            ></chat-input>
+        </div>
     </div>
 </body>
 </html>

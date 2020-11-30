@@ -19,7 +19,7 @@ const socket = new Vue({
         this.ws.onopen = () => this.$emit('socket-connect');
         this.ws.onclose = () => this.$emit('socket-disconnect');
         // TODO: need to emit different types of events to components
-        this.ws.onmessage = message => this.$emit('new-message', message);
+        this.ws.onmessage = message => this.$emit('incoming-message', message);
     }
 });
 
