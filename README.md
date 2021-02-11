@@ -11,5 +11,5 @@ Utilises the following technologies:
 1. Install Node.js (with npm).
 2. Run "npm install" in /backend directory to install required packages.
 3. Run "npm start" in /backend directory to start the Websocket server locally.
-4. Open "index.html" in the browser. Use multiple tabs to see how messages are sent and received. 
+4. Open /frontend/index.html in the browser. Use multiple tabs to see how messages are sent and received. 
 
