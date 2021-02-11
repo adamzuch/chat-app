@@ -49,6 +49,7 @@ body {
 
 .connection-status {
     /* border: 5px solid black; */
+    text-align: center;
 }
 
 .chat-window {
@@ -69,6 +70,7 @@ body {
 
     margin-top: 10px;
     max-width: 90%;
+    min-width: 10%;
     word-wrap: break-word;
     padding: 10px;
 }

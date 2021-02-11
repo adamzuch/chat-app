@@ -90,7 +90,7 @@ Vue.component('chat-input', {
             const out = {
                 userId: this.$props.userId,
                 type: 200,
-                time: new Date().toISOString(),
+                time: new Date().toUTCString(),
                 text: this.inputText
             }
             this.$root.$emit('outgoing-message', out);  // emit event which chat window listens to.
