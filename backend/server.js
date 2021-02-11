@@ -3,7 +3,8 @@ const http = require('http');
 const WebSocket = require('ws');
 const path = require('path');
 const cors = require('cors');
-const { nanoid } = require('nanoid');
+const { customAlphabet } = require('nanoid');
+const nanoid = customAlphabet('1234567890', 5);
 
 const app = express();
 const server = http.createServer(app);
