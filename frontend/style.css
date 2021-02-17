@@ -29,7 +29,7 @@ body {
 
 .header {
     /* border: 5px solid gold; */
-    margin: 10px 10px 0 10px;
+    /* margin: 10px 10px 0 10px; */
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
@@ -37,9 +37,9 @@ body {
 
 .title {
     /* border: 5px solid orange; */
-    border-radius: 10px;
-    background-color: green;
-    color: white;
+    /* border-radius: 10px; */
+    /* background-color: green; */
+    color: green;
     padding: 10px;
     display: block;
     text-align: center;
@@ -90,6 +90,7 @@ body {
 
 .message-footer {
     font-size: 0.6em;
+    padding-top: 10px;
 }
 
 .chat-input {

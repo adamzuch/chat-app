@@ -1,6 +1,6 @@
 
 /**
- * Displays the status of the WebSocket connection.
+ * Displays the user's id.
  */
 Vue.component('connection-status', { 
     props: { 
@@ -9,7 +9,6 @@ Vue.component('connection-status', {
     },
     template: 
         `<div class="connection-status">
-            status: {{ connected ? 'CONNECTED' : 'NOT CONNECTED' }}
             <div>id: {{ userId.length > 0 ? userId : 'None' }}</div> 
         </div>`
 });
@@ -87,10 +86,11 @@ Vue.component('chat-input', {
     },
     methods: {
         outgoingMessage: function() {
+            datetime = new Date();
             const out = {
                 userId: this.$props.userId,
                 type: 200,
-                time: new Date().toUTCString(),
+                time: datetime.toLocaleTimeString() + " " + datetime.toLocaleDateString(),
                 text: this.inputText
             }
             this.$root.$emit('outgoing-message', out);  // emit event which chat window listens to.
